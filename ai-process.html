@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Car Simulation AI - Proces Uczenia Maszynowego</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">CarSim AI</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Strona Główna</a></li>
+                <li><a href="ai-process.html" class="active">Proces AI</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="ai-page">
+        <div class="container">
+            <header class="section-header text-center">
+                <h1 class="gradient-text">Mózg Agenta: Uczenie ze Wzmocnieniem</h1>
+                <p class="section-subtitle">Jak nasz samochód nauczył się jeździć samodzielnie za pomocą biblioteki
+                    Unity ML-Agents i algorytmu PPO.</p>
+            </header>
+
+            <section class="ai-section card-glass">
+                <h2>Czym jest Reinforcement Learning?</h2>
+                <p>Nasz autonomiczny kierowca opiera się na koncepcji <strong>Uczenia ze Wzmocnieniem (Reinforcement
+                        Learning)</strong>. Zamiast z góry programować instrukcje "jak prowadzić", stworzyliśmy system,
+                    który uczy się metodą prób i błędów. Agent (samochód) wchodzi w interakcję ze środowiskiem (trasą),
+                    podejmuje decyzje (skręt, gaz, hamulec) i otrzymuje informacje zwrotne w postaci nagród za dobre
+                    zachowanie lub kar za złe. Wykorzystujemy do tego niezawodny algorytm <strong>PPO (Proximal Policy
+                        Optimization)</strong> dostarczany przez ML-Agents.</p>
+            </section>
+
+            <section class="ai-section grid-2-col">
+                <div class="card-glass">
+                    <h2>Sensory: Oczy Agenta</h2>
+                    <p>Aby auto mogło "widzieć" trasę, używamy komponentu <strong>Ray Perception Sensor 3D</strong>.
+                        Działa on jak wąsy, wypuszczając wirtualne promienie (Raycasty) dookoła pojazdu. Wykrywają one
+                        ściany i krawędzie toru. Oprócz tego, do sieci neuronowej przekazywana jest precyzyjna
+                        informacja o <strong>aktualnej prędkości pojazdu</strong>. Dzięki temu agent wie, jak blisko
+                        znajduje się przeszkoda i jak szybko się do niej zbliża.</p>
+                </div>
+                <div class="card-glass">
+                    <h2>System Kar i Nagród</h2>
+                    <ul class="reward-list">
+                        <li><span class="reward-icon positive">+</span>
+                            <div><strong>Checkpointy:</strong> Przejechanie przez niewidzialne bramki na trasie daje
+                                nagrodę (+1.0), motywując auto do ruchu naprzód.</div>
+                        </li>
+                        <li><span class="reward-icon negative">-</span>
+                            <div><strong>Kary Czasowe:</strong> Agent otrzymuje minimalną karę w każdej klatce
+                                symulacji, co wymusza optymalizację trasy i jazdę tak szybko jak to możliwe.</div>
+                        </li>
+                        <li><span class="reward-icon negative">-</span>
+                            <div><strong>DeathZone:</strong> Zderzenie ze specjalnymi płotkami <em>DeathZone</em> kończy
+                                się natychmiastową potężną karą (-1.0) i resetem epizodu. Uczy to trzymania się blisko
+                                środka drogi.</div>
+                        </li>
+                        <li><span class="reward-icon negative">-</span>
+                            <div><strong>Dachowanie:</strong> Jeżeli kąt nachylenia auta ulega odwróceniu (dachowanie),
+                                natychmiastowo przerywamy i resetujemy proces nauki.</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="ai-section card-glass">
+                <h2>Trening, Klonowanie i Optymalizacja</h2>
+                <p>Trening jednej sztucznej inteligencji na długiej trasie mógłby zająć miesiące. Aby temu zapobiec,
+                    zastosowaliśmy <strong>klonowanie agentów</strong>. Na jednej scenie umieściliśmy kilkadziesiąt
+                    pojazdów trenujących symultanicznie. Wyłączyliśmy kolizje między nimi ("przenikają się jak duchy"),
+                    dzięki czemu wszystkie korzystają z jednego toru wyścigowego, przesyłając równolegle tysiące danych
+                    do środowiska Pythona. Model początkowo trenował na uproszczonym "boxie", aby następnie doszkolić
+                    się na <strong>zaawansowanej fizyce docelowego samochodu Audi R8</strong>.</p>
+            </section>
+
+            <section class="ai-section card-glass text-center">
+                <h2>Proces Nauki w Praktyce</h2>
+                <p class="mb-2">Na poniższym materiale wideo możesz zobaczyć jak proces szkolenia przebiegał w
+                    środowisku Unity, począwszy od chaotycznych, losowych ruchów, po płynne pokonywanie zakrętów.</p>
+                <div class="video-container">
+                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/IKLcnepxjgA"
+                        title="Proces Treningu ML-Agents" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-note">
+                    <span class="video-note-icon">ℹ️</span>
+                    <div>
+                        <strong>Uwaga:</strong> Filmik jest prywatny. Aby go obejrzeć, należy kliknąć w okno
+                        odtwarzacza, które przekieruje bezpośrednio do serwisu YouTube, gdzie będzie można go obejrzeć.
+                    </div>
+                </div>
+
+                <h3 class="mt-2" style="color: #f8fafc; font-size: 1.5rem; margin-top: 2rem;">Wykresy Wyników Treningu
+                    (TensorBoard)</h3>
+                <p class="mb-2" style="color: #cbd5e1; font-size: 1.1rem; margin-top: 0.5rem;">Poniższe wykresy
+                    przedstawiają zbieżność procesu uczenia (skumulowaną nagrodę oraz długość epizodu) wygenerowane za
+                    pomocą TensorBoard:</p>
+                <div class="chart-container">
+                    <img src="images/learning_chart1.png" alt="Wykresy zbieżności uczenia ML-Agents" class="chart-img">
+                </div>
+
+                <p class="mt-2">Wytrenowany za pomocą uczenia maszynowego "mózg" pojazdu został ostatecznie
+                    skompresowany do lekkiego pliku <code>.onnx</code>. Z tego pliku samochód w ostatecznej grze
+                    korzysta jako z w pełni zoptymalizowanego sterownika.</p>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
